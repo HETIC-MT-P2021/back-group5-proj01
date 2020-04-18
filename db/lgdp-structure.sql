@@ -13,6 +13,7 @@ CREATE TABLE `category` (
 );
 
 CREATE TABLE `assoc_tags_images` (
+  `assoc_id` integer PRIMARY KEY,
   `image_id` integer,
   `tag_name` varchar(255)
 );
