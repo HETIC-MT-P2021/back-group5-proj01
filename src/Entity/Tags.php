@@ -10,6 +10,9 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="tags")
  * @ORM\Entity
  */
+/**
+ * @ORM\Entity(repositoryClass="App\Repository\TagsRepository")
+ */
 class Tags
 {
     /**

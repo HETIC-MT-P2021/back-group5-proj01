@@ -10,6 +10,9 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="assoc_tags_images", indexes={@ORM\Index(name="fk_image", columns={"image_id"}), @ORM\Index(name="fk_tag", columns={"tag_name"})})
  * @ORM\Entity
  */
+/**
+ * @ORM\Entity(repositoryClass="App\Repository\AssocTagsImagesRepository")
+ */
 class AssocTagsImages
 {
     /**

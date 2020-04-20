@@ -3,12 +3,19 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Images
  *
  * @ORM\Table(name="images")
  * @ORM\Entity
+ */
+/**
+ * @ORM\Entity(repositoryClass="App\Repository\ImagesRepository")
  */
 class Images
 {
@@ -18,6 +25,7 @@ class Images
      * @ORM\Column(name="image_id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @Groups("image:read")
      */
     private $imageId;
 
@@ -25,6 +33,7 @@ class Images
      * @var string|null
      *
      * @ORM\Column(name="file_name", type="string", length=255, nullable=true)
+     * @Groups("image:read")
      */
     private $fileName;
 
@@ -32,6 +41,7 @@ class Images
      * @var string|null
      *
      * @ORM\Column(name="file_url", type="string", length=255, nullable=true)
+     * @Groups("image:read")
      */
     private $fileUrl;
 
@@ -39,6 +49,7 @@ class Images
      * @var string|null
      *
      * @ORM\Column(name="description", type="string", length=255, nullable=true)
+     * @Groups("image:read")
      */
     private $description;
 
@@ -53,6 +64,7 @@ class Images
      * @var \DateTime|null
      *
      * @ORM\Column(name="created_at", type="datetime", nullable=true)
+     * @Groups("image:read")
      */
     private $createdAt;
 

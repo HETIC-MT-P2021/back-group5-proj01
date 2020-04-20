@@ -3,12 +3,16 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * Category
  *
  * @ORM\Table(name="category")
  * @ORM\Entity
+ */
+/**
+ * @ORM\Entity(repositoryClass="App\Repository\CategoryRepository")
  */
 class Category
 {
@@ -18,6 +22,7 @@ class Category
      * @ORM\Column(name="category_id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @Groups("image:read")
      */
     private $categoryId;
 
@@ -25,6 +30,7 @@ class Category
      * @var string|null
      *
      * @ORM\Column(name="category_name", type="string", length=255, nullable=true)
+     * @Groups("image:read")
      */
     private $categoryName;
 
