@@ -43,7 +43,7 @@ class ApiImagesController extends AbstractController
     public function store(Request $request, SerializerInterface $serializer, EntityManagerInterface $em, ValidatorInterface $validator) {
         $jsonRecu = $request->getContent();
         try {
-            $images = $serializer->deserialize($jsonRecu, Images::class, 'Json');
+            $images = $serializer->deserialize($jsonRecu, Images::class, 'json');
             $images->setCreatedAt(new \DateTime());
             $errors = $validator->validate($images);
 
