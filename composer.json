@@ -35,14 +35,15 @@
         "symfony/debug-pack": "*",
         "symfony/maker-bundle": "^1.15",
         "symfony/profiler-pack": "*",
-        "symfony/test-pack": "*",
-        "symfony/web-server-bundle": "4.4.2"
+        "symfony/test-pack": "*"
     },
     "config": {
         "preferred-install": {
             "*": "dist"
         },
-        "sort-packages": true
+        "sort-packages": true,
+        "disable-tls": true,
+        "secure-http": false
     },
     "autoload": {
         "psr-4": {
