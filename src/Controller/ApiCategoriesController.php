@@ -34,6 +34,6 @@ class ApiCategoriesController extends AbstractController
      */
     public function index(CategoryRepository $categoryRepository)
     {
-        return $this->json($categoryRepository->findAll(), 200, [], ['groups' => 'category:read']);
+        return $this->json($categoryRepository->findAll(), 200, [], ['groups' => 'image:read']);
     }
 }
