@@ -18,7 +18,6 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\EntityManager;
@@ -35,5 +34,30 @@ class ApiCategoriesController extends AbstractController
     public function index(CategoryRepository $categoryRepository)
     {
         return $this->json($categoryRepository->findAll(), 200, [], ['groups' => 'image:read']);
+    }
+
+    /**
+     * @Route("/api/categories", name="api_category_store", methods={"POST","OPTIONS"})
+     */
+    public function store(Request $request, SerializerInterface $serializer, EntityManagerInterface $em, ValidatorInterface $validator) {
+        $jsonRecu = $request->getContent();
+        try {
+            $category = $serializer->deserialize($jsonRecu, Category::class, 'json');
+            $errors = $validator->validate($category);
+
+            if (count($errors) > 0) {
+                return $this->json($errors, 400);
+        }
+
+
+        $em->persist($category);
+        $em->flush();
+        return $this->json($category, 201, [], ['groups' => 'image:read']);
+        } catch(NotEncodableValueException $e) {
+            return $this->json([
+                'status' => 400,
+                'message' => $e->getMessage()
+            ], 400);
+        }
     }
 }

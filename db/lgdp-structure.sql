@@ -46,10 +46,15 @@ CREATE TABLE IF NOT EXISTS `assoc_tags_images` (
 
 DROP TABLE IF EXISTS `category`;
 CREATE TABLE IF NOT EXISTS `category` (
-  `category_id` int(11) NOT NULL,
+  `category_id` int(11) NOT NULL AUTO_INCREMENT,
   `category_name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`category_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+INSERT INTO `category` (`category_name`) VALUES
+('Vacances'),
+('Animaux');
+
 
 -- --------------------------------------------------------
 
