@@ -30,7 +30,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 class ApiCategoriesController extends AbstractController
 {
     /**
-     * @Route("/api/categories", name="api_category_index", methods={"GET"})
+     * @Route("/api/categories", name="api_categories_index", methods={"GET"})
      */
     public function index(CategoryRepository $categoryRepository)
     {
@@ -52,6 +52,19 @@ class ApiCategoriesController extends AbstractController
         $response = new Response($jsonContent);
         $response->headers->set('Content-Type', 'application/json');
         return $response;
+    }
+
+
+
+        /**
+     * @Route("/api/categories/supprimer/{id}", name="supprime", methods={"DELETE"})
+     */
+    public function removeCategory(Category $category)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($category);
+        $entityManager->flush();
+        return new Response('ok');
     }
 
     /**

@@ -32,15 +32,15 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 class ApiImagesController extends AbstractController
 {
     /**
-     * @Route("/api/images", name="api_images_index", methods={"GET"})
+     * @Route("/api/image", name="api_images_index", methods={"GET"})
      */
     public function index(ImagesRepository $imagesRepository)
     {
-        return $this->json($imagesRepository->findAll(), 200, [], ['groups' => 'image:read']);
+        return $this->json($imagesRepository->findAll(), 200, []);
     }
     
         /**
-     * @Route("/api/images/{id}", name="api_images_index", methods={"GET"})
+     * @Route("/api/image/{id}", name="api_image_index", methods={"GET"})
      */
     public function getImage(Images $images)
     {
@@ -56,6 +56,17 @@ class ApiImagesController extends AbstractController
         $response->headers->set('Content-Type', 'application/json');
         return $response;
     }
+    /**
+     * Editer une image
+     * @Route("/api/image/editer/{id}", name="editer_image",  methods={"PUT"})
+     */
+
+
+
+
+
+
+
     /**
      * @Route("/api/images", name="api_images_store", methods={"POST"})
      */
