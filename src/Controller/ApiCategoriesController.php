@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 use App\Entity\Category;
+use Symfony\Component\Serializer\Serializer; 
 
 use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -35,6 +36,23 @@ class ApiCategoriesController extends AbstractController
     {
         return $this->json($categoryRepository->findAll(), 200, [], ['groups' => 'image:read']);
     }
+    /**
+     * @Route("/api/categories/{id}", name="api_category_index", methods={"GET"})
+     */
+    public function getCategory(Category $category)
+    {
+        $encoders = [new JsonEncoder()];
+        $normalizers = [new ObjectNormalizer()];
+        $serializer = new Serializer($normalizers, $encoders);
+        $jsonContent = $serializer->serialize($category, 'json', [
+            'circular_reference_handler' => function ($object) {
+                return $object->getCategoryId();
+            }
+        ]);
+        $response = new Response($jsonContent);
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
+    }
 
     /**
      * @Route("/api/categories", name="api_category_store", methods={"POST","OPTIONS"})
@@ -48,6 +66,8 @@ class ApiCategoriesController extends AbstractController
             if (count($errors) > 0) {
                 return $this->json($errors, 400);
         }
+    
+    
 
 
         $em->persist($category);
