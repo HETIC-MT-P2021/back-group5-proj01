@@ -1,9 +1,9 @@
 <?php
 
 namespace App\Controller;
-use App\Entity\Images;
+use App\Entity\Tags;
 
-use App\Repository\ImagesRepository;
+use App\Repository\TagsRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -27,36 +27,33 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 
 
-class ApiImagesController extends AbstractController
+class ApiTagsController extends AbstractController
 {
     /**
-     * @Route("/api/images", name="api_images_index", methods={"GET"})
+     * @Route("/api/tags", name="api_tags_index", methods={"GET"})
      */
-    public function index(ImagesRepository $imagesRepository)
+    public function index(TagsRepository $tagsRepository)
     {
-        return $this->json($imagesRepository->findAll(), 200, [], ['groups' => 'image:read']);
+        return $this->json($tagsRepository->findAll(), 200, []);
     }
-    
 
- 
     /**
-     * @Route("/api/images", name="api_images_store", methods={"POST"})
+     * @Route("/api/tags", name="api_tags_store", methods={"POST"})
      */
     public function store(Request $request, SerializerInterface $serializer, EntityManagerInterface $em, ValidatorInterface $validator) {
         $jsonRecu = $request->getContent();
         try {
-            $images = $serializer->deserialize($jsonRecu, Images::class, 'json');
-            $images->setCreatedAt(new \DateTime());
-            $errors = $validator->validate($images);
+            $tags = $serializer->deserialize($jsonRecu, Tags::class, 'json');
+            $errors = $validator->validate($tags);
 
             if (count($errors) > 0) {
                 return $this->json($errors, 400);
         }
 
 
-        $em->persist($images);
+        $em->persist($tags);
         $em->flush();
-        return $this->json($images, 201, [], ['groups' => 'image:read']);
+        return $this->json($tags, 201, []);
         } catch(NotEncodableValueException $e) {
             return $this->json([
                 'status' => 400,

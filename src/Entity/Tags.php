@@ -18,7 +18,7 @@ class Tags
     /**
      * @var string
      *
-     * @ORM\Column(name="tag_name", type="string", length=155, nullable=false)
+     * @ORM\Column(name="tag_name", type="string", length=155, nullable=true)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
@@ -27,6 +27,13 @@ class Tags
     public function getTagName(): ?string
     {
         return $this->tagName;
+    }
+    
+    public function setTagName(?string $tagName): self
+    {
+        $this->tagName = $tagName;
+
+        return $this;
     }
 
 
