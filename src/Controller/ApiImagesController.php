@@ -3,8 +3,6 @@
 namespace App\Controller;
 use App\Entity\Images;
 
-
-use Symfony\Component\Serializer\Serializer; 
 use App\Repository\ImagesRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -39,23 +37,8 @@ class ApiImagesController extends AbstractController
         return $this->json($imagesRepository->findAll(), 200, [], ['groups' => 'image:read']);
     }
     
-        /**
-     * @Route("/api/images/{id}", name="api_images_index", methods={"GET"})
-     */
-    public function getImage(Images $images)
-    {
-        $encoders = [new JsonEncoder()];
-        $normalizers = [new ObjectNormalizer()];
-        $serializer = new Serializer($normalizers, $encoders);
-        $jsonContent = $serializer->serialize($images, 'json', [
-            'circular_reference_handler' => function ($object) {
-                return $object->getImageId();
-            }
-        ]);
-        $response = new Response($jsonContent);
-        $response->headers->set('Content-Type', 'application/json');
-        return $response;
-    }
+
+ 
     /**
      * @Route("/api/images", name="api_images_store", methods={"POST"})
      */
