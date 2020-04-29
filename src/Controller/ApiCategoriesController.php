@@ -57,7 +57,7 @@ class ApiCategoriesController extends AbstractController
 
 
         /**
-     * @Route("/api/categories/supprimer/{id}", name="supprime", methods={"DELETE"})
+     * @Route("/api/categories/supprimer/{id}", name="supprimer", methods={"DELETE"})
      */
     public function removeCategory(Category $category)
     {
@@ -66,15 +66,7 @@ class ApiCategoriesController extends AbstractController
         $entityManager->flush();
         return new Response('ok');
     }
-     /**
-     * @Route("/categorie/editer/{id}", name="edit", methods={"PUT"})
-     */
-    public function editCategory(?Category $category, CategoryRepository $categoryRepository, Request $request,  EntityManagerInterface $em){
-        $serializer->deserialize($request->getContent(), 'array', 'json');
-        $Category = $categoryRepository->findOneByCategory($categoryName['fileName']);
-        $em->persist($categoryName );
-        $em->flush();
-    }
+
 
     /**
      * @Route("/api/categories", name="api_category_store", methods={"POST","OPTIONS"})
