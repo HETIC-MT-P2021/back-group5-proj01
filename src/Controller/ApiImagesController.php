@@ -56,11 +56,29 @@ class ApiImagesController extends AbstractController
         $response->headers->set('Content-Type', 'application/json');
         return $response;
     }
+            /**
+     * @Route("/api/images/supprimer/{id}", name="supprime", methods={"DELETE"})
+     */
+    public function removeCategory(Images $images)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($images);
+        $entityManager->flush();
+        return new Response('ok');
+    }
     /**
      * Editer une image
      * @Route("/api/image/editer/{id}", name="editer_image",  methods={"PUT"})
      */
+    public function editerImage(ImagesRepository $imageRepo,  Request $request, EntityManagerInterface $entityManager, SerializerInterface $serializer)
+    {
+        $data = $serializer->deserialize($request->getContent(), Images::class, 'json');
+        $image = $imageRepo->find($id); 
 
+        $entityManager->persist($image);
+        $entityManager->flush();
+    
+    }
 
 
 

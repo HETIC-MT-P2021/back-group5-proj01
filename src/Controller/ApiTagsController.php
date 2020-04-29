@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 use App\Entity\Tags;
+use Symfony\Component\Serializer\Serializer; 
 
 use App\Repository\TagsRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -17,7 +18,6 @@ use Symfony\Component\Serializer\Exception\NotEncodableValueException;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
-
 
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -49,18 +49,18 @@ class ApiTagsController extends AbstractController
             if (count($errors) > 0) {
                 return $this->json($errors, 400);
         }
+    
+    
 
 
         $em->persist($tags);
         $em->flush();
-        return $this->json($tags, 201, []);
+        return $this->json($tags, 201,  [], ['groups' => 'image:read']);
         } catch(NotEncodableValueException $e) {
             return $this->json([
                 'status' => 400,
                 'message' => $e->getMessage()
             ], 400);
         }
-        
-
     }
 }
