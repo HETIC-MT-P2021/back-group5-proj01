@@ -56,8 +56,8 @@ class ApiCategoriesController extends AbstractController
 
 
 
-        /**
-     * @Route("/api/categories/supprimer/{id}", name="supprimer", methods={"DELETE"})
+    /**
+     * @Route("/api/categories/{id}", name="supprimer", methods={"DELETE"})
      */
     public function removeCategory(Category $category)
     {
@@ -67,7 +67,7 @@ class ApiCategoriesController extends AbstractController
         return new Response('ok');
     }
 
-
+    
     /**
      * @Route("/api/categories", name="api_category_store", methods={"POST","OPTIONS"})
      */
