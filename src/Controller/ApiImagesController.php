@@ -66,18 +66,41 @@ class ApiImagesController extends AbstractController
         $entityManager->flush();
         return new Response('ok');
     }
-    /**
-     * Editer une image
-     * @Route("/api/image/editer/{id}", name="editer_image",  methods={"PUT"})
-     */
-    public function editerImage(ImagesRepository $imageRepo,  Request $request, EntityManagerInterface $entityManager, SerializerInterface $serializer)
-    {
-        $data = $serializer->deserialize($request->getContent(), Images::class, 'json');
-        $image = $imageRepo->find($id); 
 
-        $entityManager->persist($image);
-        $entityManager->flush();
-    
+
+
+        /**
+     * @Route("/image/editer/{id}", name="edit", methods={"PUT"})
+     */
+    public function editImage(?Images $images, Request $request)
+    {
+  
+        if($request->isXmlHttpRequest()) {
+
+            
+            $donnees = json_decode($request->getContent());
+
+           
+            $code = 200;
+
+           
+
+            
+            $images->setDescription($donnees->description);
+            $images->setFileUrl($donnees->fileUrl);
+            $images->setFileName($donnees->fileName);
+            $user = $this->getDoctrine()->getRepository(Images::class)->find(1);
+            
+
+            // On sauvegarde en base
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($images);
+            $entityManager->flush();
+
+            // On retourne la confirmation
+            return new Response('ok', $code);
+        }
+        return new Response('Failed', 404);
     }
 
 
