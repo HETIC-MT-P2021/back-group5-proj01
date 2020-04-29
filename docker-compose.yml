@@ -1,0 +1,29 @@
+version:  '3.7'
+
+services :
+    mysql:
+        image: mysql:8.0
+        restart: on-failure
+        environment:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: casa 
+
+    php:
+        build:
+            context: .
+            dockerfile: ./docker/engine/Dockerfile
+        restart: on-failure
+        env_file:
+            - .env
+        user: 1000:1000
+
+    nginx:
+        image: nginx:1.15.3-alpine
+        restart: on-failure
+        depends_on:
+            - php
+        volumes:
+            - './public:/usr/src/app'
+            - './docker/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro'
+        ports:
+            - '8001:8001'
