@@ -52,7 +52,11 @@ class ApiImagesController extends AbstractController
                 return $object->getImageId();
             }
         ]);
-        $response = new Response($jsonContent);
+
+        $jsonContent = json_decode($jsonContent);
+        $jsonContent->createdAt = date("d/m/Y", $jsonContent->createdAt->timestamp);
+
+        $response = new Response(json_encode($jsonContent));
         $response->headers->set('Content-Type', 'application/json');
         return $response;
     }
